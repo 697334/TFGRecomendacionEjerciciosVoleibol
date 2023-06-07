@@ -11,6 +11,10 @@ public class Rutina {
 	public Rutina() {		
 	}
 	
+	public Rutina(int duracion) {
+		this.duracion = duracion;
+	}
+	
 	public Rutina(int numJugadores, int edad, int duracion, String objetivo,String tipo) {
 		this.numJugadores = numJugadores;
 		this.duracion = duracion;
