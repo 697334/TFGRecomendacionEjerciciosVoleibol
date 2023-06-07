@@ -25,6 +25,7 @@ import java.sql.Statement;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class DetalleEjercicio {
 
@@ -166,6 +167,65 @@ public class DetalleEjercicio {
 		lblError.setBounds(166, 432, 362, 14);
 		frame.getContentPane().add(lblError);
 		
+		JButton btnBorrar = new JButton("<html><body>Borrar<br>puntuación</body></html>");
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarPuntuacion();
+			}
+		});
+		btnBorrar.setBounds(737, 401, 86, 41);
+		frame.getContentPane().add(btnBorrar);
+		
+	}
+	
+	private void borrarPuntuacion(){
+		Connection connection = null;
+        try
+        {
+            Class.forName("org.postgresql.Driver");
+
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/EntrenamientoVoleibol","postgres","root");
+            Statement sentencia = connection.createStatement();
+
+            /*String sentenciaConsultar = "SELECT * FROM public.\"UsuarioEjercicio\" " +                   
+                    " WHERE public.\"UsuarioEjercicio\".\"IdEjercicio\" = '" + ejercicio.getId() +
+                    "' AND public.\"UsuarioEjercicio\".\"IdUsuario\" = '" + infoUsuario.getIdUsuario() + "'";
+
+            System.out.println(sentenciaConsultar);
+            ResultSet resultados = sentencia.executeQuery(sentenciaConsultar);
+            while(resultados.next()) {
+            	
+            }*/
+            String sentenciaBorrar = "DELETE FROM public.\"UsuarioEjercicio\" WHERE public.\"UsuarioEjercicio\".\"IdEjercicio\" = " + ejercicio.getId()
+            		+ " AND  public.\"UsuarioEjercicio\".\"IdUsuario\" = " + infoUsuario.getIdUsuario();
+            
+            System.out.println(sentenciaBorrar);
+            
+			sentencia.executeUpdate(sentenciaBorrar);
+            sentencia.close();
+        }
+        catch (ClassNotFoundException cnfe) {
+            System.out.println("Error al cargar el conector de SQLite: " + cnfe.getMessage());
+            cnfe.printStackTrace();
+        }
+        catch (SQLException sqle) {
+            System.out.println("Error de SQL: " + sqle.getMessage());
+            sqle.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 	}
 	
 	/*private void anyadirPuntuacion(double puntuacionNueva,String id) {

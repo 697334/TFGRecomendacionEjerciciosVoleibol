@@ -215,6 +215,19 @@ public class ConsultaEjercicios{
 		JButton btnBuscar = new JButton("Filtrar ejercicios");
 		btnBuscar.setBounds(433, 254, 118, 23);
 		frame.getContentPane().add(btnBuscar);
+		
+		JButton btnAtras = new JButton("Atrás");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Entras a la primera ventana de la aplicación:
+	         	Inicio vtnInicio = new Inicio(infoUsuario);
+				//vtnInicio.generarVentana(infoUsuario);
+				frame.setVisible(false);
+			}
+		});
+		btnAtras.setBounds(10, 11, 68, 26);
+		frame.getContentPane().add(btnAtras);
+		
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int numJugadoresMin = 0;

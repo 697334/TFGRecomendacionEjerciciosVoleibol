@@ -53,6 +53,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 
@@ -112,7 +113,19 @@ public class RutinaEjercicios{
 		
 		JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(304, 108, 225, 185);
-		frame.getContentPane().add(scrollPane);				
+		frame.getContentPane().add(scrollPane);
+		
+		JButton btnAtras = new JButton("Atrás");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Entras a la primera ventana de la aplicación:
+	         	Inicio vtnInicio = new Inicio(infoUsuario);
+				//vtnInicio.generarVentana(infoUsuario);
+				frame.setVisible(false);
+			}
+		});
+		btnAtras.setBounds(10, 11, 74, 44);
+		frame.getContentPane().add(btnAtras);
 
 	}
 	
@@ -203,24 +216,24 @@ public class RutinaEjercicios{
 				String imagen = resultados.getString("ImagenURL");
 				
 				double preferencia = 0.0;
-				//Condiciones de aumento de preferencia
-				if(rut.getNumJugadores() == 0) {
-					preferencia = preferencia + 0.7; //Se ha elegido no especificar numJugadores
-				}
-				if(rut.getEdad() == 0) {
-					preferencia = preferencia + 0.7; //Se ha elegido no especificar edad
-				}
+				//Condiciones de aumento de preferencia				
 				if(numJugMin <= rut.getNumJugadores() && numJugMax >= rut.getNumJugadores()) {
-					preferencia = preferencia + 1.4;
+					preferencia = preferencia + 1;
 				}
 				if(edadMin <= rut.getEdad() &&edadMax >= rut.getEdad()) {
-					preferencia = preferencia + 1.4;
+					preferencia = preferencia + 1;
 				}
 				if(objetivo.equals(rut.getObjetivo())){
-					preferencia = preferencia + 1.1;
+					preferencia = preferencia + 1;
 				}
 				if(tipo.equals(rut.getTipo())){
-					preferencia = preferencia + 1.1;
+					preferencia = preferencia + 1;
+				}
+				if(rut.getNumJugadores() == 0) {
+					preferencia = preferencia + 0.5; //Se ha elegido no especificar numJugadores
+				}
+				if(rut.getEdad() == 0) {
+					preferencia = preferencia + 0.5; //Se ha elegido no especificar edad
 				}
 				
 				
@@ -471,10 +484,27 @@ public class RutinaEjercicios{
 		        	return Double.compare(ejer1.getPreferencia(), ejer2.getPreferencia());
 		        }
 		    });
-			for (int i = 0; i < listaEjercicios.size(); i++) {
+			String pruebaBorrar = "";
+			for (int i = 0; i < listaEjercicios.size(); i++) {				
+			      pruebaBorrar = pruebaBorrar + " " +listaEjercicios.get(i).getDescripcion();
+			}
+			pruebaBorrar = pruebaBorrar + " ";
+			StringTokenizer st = new StringTokenizer(pruebaBorrar);
+		    System.out.println("Número de palabras: " + st.countTokens()); 
+			
+			
+			int tamanyoLista = listaEjercicios.size();
+			listaEjercicios = listaEjercicios.subList(tamanyoLista - 30, tamanyoLista); //Te quedas con los ejercicios relevantes
+			for (int i = 0; i < listaEjercicios.size(); i++) {				
 			      System.out.println(listaEjercicios.get(i).getId() + ", " + listaEjercicios.get(i).getPreferencia());
 			}
-			
+			Collections.sort(listaEjercicios, new Comparator<Ejercicio>() {
+		        @Override
+		        public int compare(Ejercicio ejer1, Ejercicio ejer2) {
+
+		        	return Double.compare(ejer1.getPuntuacion(), ejer2.getPuntuacion());
+		        }
+		    });
 			int duracionRestanteRutina = rut.getDuracion();
 			int duracionRestanteFisico = duracionRestanteRutina/2;
 			
@@ -698,9 +728,18 @@ public class RutinaEjercicios{
 		        	return Double.compare(ejer1.getPreferencia(), ejer2.getPreferencia());
 		        }
 		    });
-			for (int i = 0; i < listaEjercicios.size(); i++) {
+			int tamanyoLista = listaEjercicios.size();
+			listaEjercicios = listaEjercicios.subList(tamanyoLista - 30, tamanyoLista); //Te quedas con los ejercicios relevantes
+			for (int i = 0; i < listaEjercicios.size(); i++) {				
 			      System.out.println(listaEjercicios.get(i).getId() + ", " + listaEjercicios.get(i).getPreferencia());
 			}
+			Collections.sort(listaEjercicios, new Comparator<Ejercicio>() {
+		        @Override
+		        public int compare(Ejercicio ejer1, Ejercicio ejer2) {
+
+		        	return Double.compare(ejer1.getPuntuacion(), ejer2.getPuntuacion());
+		        }
+		    });
 			
 			int duracionRestanteRutina = rut.getDuracion();
 			int duracionRestanteFisico = duracionRestanteRutina/2;
@@ -895,9 +934,18 @@ private void generarRecomendacionLDA()  throws InterruptedException {
 		        	return Double.compare(ejer1.getPreferencia(), ejer2.getPreferencia());
 		        }
 		    });
-			for (int i = 0; i < listaEjercicios.size(); i++) {
+			int tamanyoLista = listaEjercicios.size();
+			listaEjercicios = listaEjercicios.subList(tamanyoLista - 30, tamanyoLista); //Te quedas con los ejercicios relevantes
+			for (int i = 0; i < listaEjercicios.size(); i++) {				
 			      System.out.println(listaEjercicios.get(i).getId() + ", " + listaEjercicios.get(i).getPreferencia());
 			}
+			Collections.sort(listaEjercicios, new Comparator<Ejercicio>() {
+		        @Override
+		        public int compare(Ejercicio ejer1, Ejercicio ejer2) {
+
+		        	return Double.compare(ejer1.getPuntuacion(), ejer2.getPuntuacion());
+		        }
+		    });
 			
 			int duracionRestanteRutina = rut.getDuracion();
 			int duracionRestanteFisico = duracionRestanteRutina/2;

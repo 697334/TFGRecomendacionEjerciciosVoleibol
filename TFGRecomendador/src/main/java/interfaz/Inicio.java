@@ -35,19 +35,6 @@ public class Inicio {
 	/**
 	 * Launch the application.
 	 */
-	/*public void generarVentana(Usuario infoUsuario) {
-		this.infoUsuario = infoUsuario;
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Inicio window = new Inicio();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the application.
@@ -79,9 +66,15 @@ public class Inicio {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ConfiguracionRutina cnfRt = new ConfiguracionRutina(infoUsuario, tipoRecomendacion);
-				//cnfRt.generarVentana();
-				frame.setVisible(false);			
+				if(tipoRecomendacion == 0) {
+					ConfiguracionRutina cnfRt = new ConfiguracionRutina(infoUsuario, tipoRecomendacion);
+					//cnfRt.generarVentana();
+					frame.setVisible(false);
+				}else {
+					ConfiguracionRutinaAvanzada cnfRt = new ConfiguracionRutinaAvanzada(infoUsuario, tipoRecomendacion);
+					//cnfRt.generarVentana();
+					frame.setVisible(false);
+				}							
 			
 			}
 		});
@@ -95,6 +88,21 @@ public class Inicio {
 			public void actionPerformed(ActionEvent e) {
 				
 				ConsultaEjercicios cstEjer = new ConsultaEjercicios(infoUsuario);
+				//cstEjer.generarVentana();
+				frame.setVisible(false);			
+			
+			}
+		});
+		
+		JMenu mnNewMenu_3 = new JMenu("Puntuaciones");
+		menuBar.add(mnNewMenu_3);
+		
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Ver historial de puntuaciones");
+		mnNewMenu_3.add(mntmNewMenuItem_6);
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ConsultarPuntuaciones cstEjer = new ConsultarPuntuaciones(infoUsuario);
 				//cstEjer.generarVentana();
 				frame.setVisible(false);			
 			
@@ -125,6 +133,13 @@ public class Inicio {
 				tipoRecomendacion = 3;						
 			}
 		});
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Preferencias");
+		mnNewMenu_2.add(mntmNewMenuItem_5);
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				tipoRecomendacion = 0;						
+			}
+		});		
 		frame.getContentPane().setLayout(null);
 		
 		String texto = "<html><body>¡Bienvenido<br> al sistema recomendador de<br> ejercicios de voleibol!</body></html>";
